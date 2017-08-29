@@ -34,11 +34,11 @@ $(BUILDDIR)/$(d)/lib$(PACKAGE).a:	ARFLAGS_TGT :=
 $(BUILDDIR)/$(d)/lib$(PACKAGE).a: $(OBJS_$(d))
 	$(STATICLIB)
 
-TGT_LIB 	:= $(TGT_LIB) $(BUILDDIR)/$(d)/lib$(PACKAGE).so $(BUILDDIR)/$(d)/lib$(PACKAGE).a
+TGT_LIB		:= $(TGT_LIB) $(BUILDDIR)/$(d)/lib$(PACKAGE).so $(BUILDDIR)/$(d)/lib$(PACKAGE).a
 CLEAN		:= $(CLEAN) $(TGT_LIB)
-TGT_INCLUDE := $(HEADERS_$(d))
+TGT_INCLUDE	:= $(HEADERS_$(d))
 
-INCLUDES_$(PACKAGE) := -I $(d) $(CFLAGS_$(PACKAGE))
+INCLUDES_$(PACKAGE) := -I $(d) $(CXXFLAGS_$(PACKAGE))
 PATH_$(PACKAGE) := $(BUILDDIR)/$(d)/
 LIBPATH_$(PACKAGE) := -L $(PATH_$(PACKAGE))
 LIB_$(PACKAGE) := -l $(PACKAGE)

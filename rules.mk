@@ -71,12 +71,10 @@ endif
 	$(eval VERSION_$@ := $(shell pkg-config --modversion $@ 2>/dev/null))
 	$(eval CFLAGS_$@ := $(shell pkg-config --cflags-only-other $@ 2>/dev/null))
 	$(eval CXXFLAGS_$@ := $(CFLAGS_$@))
-	$(eval INCLUDES_$@ := $(shell pkg-config --cflags-only-I $@ 2>/dev/null) \
-	-D$(shell echo 'HAVE_$@=$(HAVE_$@)' | tr '[:lower:]' '[:upper:]' | sed 's/-/_/'))
+	$(eval INCLUDES_$@ := $(shell pkg-config --cflags-only-I $@ 2>/dev/null))
 	$(eval LIBPATH_$@ := $(shell pkg-config --libs-only-L $@ 2>/dev/null))
 	$(eval LIB_$@ := $(shell pkg-config --libs-only-l $@ 2>/dev/null))
 	$(eval LINKFLAGS_$@ := $(shell pkg-config --libs-only-other $@ 2>/dev/null))
-	$(eval HAVE_$@ := 1)
 	$(eval DEFINES := $(DEFINES) -D$(shell echo 'HAVE_$@=$(HAVE_$@)' | tr '[:lower:]' '[:upper:]' | sed 's/-/_/'))
 	@echo $(VERSION_$@)
 
@@ -89,8 +87,9 @@ install: all
 	[ -z "$(TGT_INCLUDE)" ] || $(INSTALL) -m 644 -D -t $(INCLUDEDIR) $(TGT_INCLUDE)
 	$(INSTALL) -m 644 -D -t $(LIBDIR)/pkgconfig $(PKGCONFIG_FILE)
 
-.PHONY: test $(TESTS)
+.PHONY: check test $(TESTS)
 test: all $(TESTS)
+check: test
 
 # Prevent make from removing any build targets, including intermediate ones
 
